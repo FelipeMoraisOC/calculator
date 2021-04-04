@@ -3,7 +3,8 @@
 Simple Calculator using React-Native. 
 
 This project is my version of a [Udemy](https://www.udemy.com/course/curso-react-native/) course project. 
-<!-- Add GIF of calculator running -->
+
+![calculator-react-native](demo/calculator-react-native.gif)
 ## 🚀 Setup
 
 To run this calculator you'll need Node 12 LTS or greater installed.
