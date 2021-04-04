@@ -1,19 +1,51 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 
 import Button from './src/components/Button'
 import Display from './src/components/Display'
 
+const initialState = {
+
+  displayValue: '0', //Number that appears in display
+  clearDisplay: false, //if true next display must be cleaned
+  operation: null, //Which operation is set / * + - 
+  values: [0, 0], //Array that helps making the operations 
+  current: 0 //Which index of values[] is being displayed
+}
+
 export default class App extends Component {
-  state = {
-    displayValue: '0'
-  }
+  
+  state = { ...initialState }
+
+
   addDigit = n => {
-    this.setState({displayValue: n})
+    
+     //prevents more than one '.' being displayed
+    if(n === '.' && this.state.displayValue.includes('.')){
+      return
+    }
+
+    //Clears display. Prevent displayValue being 0'n' and adds to the side, the next value in display
+
+    const clearDisplay = this.state.displayValue === '0' || this.state.clearDisplay 
+    const currentValue = clearDisplay ? '' : this.state.displayValue
+    const displayValue = currentValue + n 
+    this.setState({ displayValue, clearDisplay: false })
+
+    
+    //sets a new value of index 'current' to the state
+
+    if( n!== '.'){ 
+      const newValue = parseFloat(displayValue) 
+      const values = [...this.state.values] 
+      values[this.state.current] = newValue
+      this.setState({ values })
+    }
+      
   }
 
   clearMemory = () => {
-    this.setState({displayValue: '0'})
+    this.setState({ ...initialState})
   }
 
   setOperation = () => { //5 botoes de operacao
